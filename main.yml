@@ -1,0 +1,53 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run a one-line script
+      run: echo Hello, world!
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+#include <Servo.h>
+
+volatile int item;
+
+Servo servo_2;
+
+void setup(){
+  servo_2.attach(2);
+  item = 0;
+  servo_2.write(45);
+  delay(0);
+  item = 0;
+  Serial.begin(9600);
+}
+
+void loop(){
+  Serial.println(item);
+
+  while (analogRead(A0) > 500 || analogRead(A0) < 10) {
+    delay(30);
+    if (analogRead(A0) > 500 || analogRead(A0) < 10) {
+      item = item + 1;
+      delay(50);
+      if (item == 5) {
+        servo_2.write(135);
+        delay(4000);
+        servo_2.write(45);
+        delay(100);
+        item = 0;
+
+      }
+
+    }
+  }
+
+}
